@@ -12,6 +12,7 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 white = (255, 255, 255)
 black = (0, 0, 0)
 red = (255, 0, 0)
+green = (0, 255, 0)
 
 # 字体设置
 font = pygame.font.SysFont("monospace", 35)
@@ -32,6 +33,21 @@ background_image = pygame.transform.scale(background_image, (screen_width, scree
 # 时钟
 clock = pygame.time.Clock()
 
+def draw_button(text, x, y, width, height, inactive_color, active_color, action=None):
+    mouse = pygame.mouse.get_pos()
+    click = pygame.mouse.get_pressed()
+
+    if x + width > mouse[0] > x and y + height > mouse[1] > y:
+        pygame.draw.rect(screen, active_color, (x, y, width, height))
+        if click[0] == 1 and action is not None:
+            action()
+    else:
+        pygame.draw.rect(screen, inactive_color, (x, y, width, height))
+
+    text_surface = font.render(text, True, black)
+    text_rect = text_surface.get_rect(center=(x + width // 2, y + height // 2))
+    screen.blit(text_surface, text_rect)
+
 def game_intro():
     intro = True
     while intro:
@@ -45,12 +61,12 @@ def game_intro():
         # 绘制背景图片
         screen.blit(background_image, (0, 0))
         
-        # 绘制文本
-        text = font.render("Press any key to start", True, white)
-        screen.blit(text, (screen_width // 2 - text.get_width() // 2, screen_height // 2 - text.get_height() // 2))
-        
+          # 绘制按钮
+        draw_button("Start Game", screen_width // 2 - 100, screen_height // 2 - 25, 200, 50, green, red, game_loop)
+
         pygame.display.update()
         clock.tick(15)
+
 
 def game_loop():
     game_over = False
@@ -70,7 +86,7 @@ def game_loop():
             player_pos[1] -= 10
         if keys[pygame.K_DOWN] and player_pos[1] < screen_height - player_size:
             player_pos[1] += 10
-            
+
         # 更新敌人位置
         enemy_pos[0] += enemy_speed[0]
         enemy_pos[1] += enemy_speed[1]
