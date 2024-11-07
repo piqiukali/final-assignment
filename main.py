@@ -5,7 +5,7 @@ import random
 pygame.init()
 
 # 设置屏幕尺寸
-screen_width, screen_height = 800, 600
+screen_width, screen_height = 900, 600
 screen = pygame.display.set_mode((screen_width, screen_height))
 
 # 定义颜色
@@ -25,8 +25,13 @@ enemy_size = 50
 enemy_pos = [random.randint(0, screen_width - enemy_size), random.randint(0, screen_height - enemy_size)]
 enemy_speed = [random.choice([-5, 5]), random.choice([-5, 5])]
 
+# 加载背景图片
+background_image = pygame.image.load("image/background.jpg")
+background_image = pygame.transform.scale(background_image, (screen_width, screen_height))
+
 # 时钟
 clock = pygame.time.Clock()
+
 def game_intro():
     intro = True
     while intro:
@@ -37,9 +42,13 @@ def game_intro():
             if event.type == pygame.KEYDOWN:
                 intro = False
 
-        screen.fill(black)
+        # 绘制背景图片
+        screen.blit(background_image, (0, 0))
+        
+        # 绘制文本
         text = font.render("Press any key to start", True, white)
         screen.blit(text, (screen_width // 2 - text.get_width() // 2, screen_height // 2 - text.get_height() // 2))
+        
         pygame.display.update()
         clock.tick(15)
 
@@ -49,7 +58,8 @@ def game_loop():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game_over = True
- # 获取按键
+
+        # 获取按键
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_LEFT] and player_pos[0] > 0:
@@ -60,7 +70,7 @@ def game_loop():
             player_pos[1] -= 10
         if keys[pygame.K_DOWN] and player_pos[1] < screen_height - player_size:
             player_pos[1] += 10
-
+            
         # 更新敌人位置
         enemy_pos[0] += enemy_speed[0]
         enemy_pos[1] += enemy_speed[1]
