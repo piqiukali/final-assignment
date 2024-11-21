@@ -3,6 +3,8 @@ import sys
 
 pygame.init()
 
+pygame.mixer.init()
+
 SCREEN_WIDTH = 1920
 SCREEN_HEIGHT = 1080
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -16,6 +18,10 @@ BLUE = (33, 150, 243)
 
 font_title = pygame.font.Font(None, 100)
 font_button = pygame.font.Font(None, 48)
+font_settings = pygame.font.Font(None, 36)
+
+pygame.mixer.music.load('background_music.mp3')  # 确保音乐文件在正确的路径
+pygame.mixer.music.play(-1) 
 
 
 button_width = 300
@@ -23,7 +29,7 @@ button_height = 80
 corner_radius = 20  
 start_button_rect = pygame.Rect((SCREEN_WIDTH // 2 - button_width // 2, SCREEN_HEIGHT // 2 - button_height // 2 - 100), (button_width, button_height))
 exit_button_rect = pygame.Rect((SCREEN_WIDTH // 2 - button_width // 2, SCREEN_HEIGHT // 2 - button_height // 2 + 20), (button_width, button_height))
-
+settings_button_rect = pygame.Rect((20, 20), (button_width, button_height)) 
 
 def draw_rounded_rect(surface, color, rect, radius):
     
