@@ -51,6 +51,17 @@ def draw_button(text, rect, color, hover_color):
     label_rect = label.get_rect(center=rect.center)
     screen.blit(label, label_rect)
 
+def draw_settings_button(text, rect, color, hover_color):
+    mouse_x, mouse_y = pygame.mouse.get_pos()
+    if rect.collidepoint(mouse_x, mouse_y):
+        button_color = hover_color
+    else:
+        button_color = color
+
+    draw_rounded_rect(screen, button_color, rect, corner_radius)
+    label = font_settings.render(text, True, WHITE)
+    label_rect = label.get_rect(center=rect.center)
+    screen.blit(label, label_rect)
 
 def draw_gradient_text(text, font, start_color, end_color, x, y):
     
@@ -75,7 +86,11 @@ def draw_gradient_text(text, font, start_color, end_color, x, y):
         current_x += char_surface.get_width() + spacing
 
 def main():
-    while True:
+    settings = False  # 设置界面开关
+    volume = 1.0  # 默认音量
+    font_size = 48
+    
+     while True:
         screen.fill(WHITE)
 
         for event in pygame.event.get():
@@ -90,6 +105,27 @@ def main():
                     print("Exit button clicked!")
                     pygame.quit()
                     sys.exit()
+                if settings_button_rect.collidepoint(event.pos):
+                    settings = not settings
+
+       if settings:
+            # 绘制设置界面
+            screen.fill(BLACK)  # 用黑色填充屏幕作为背景
+            draw_settings_button("Back", settings_button_rect, GREEN, (45, 160, 73))
+            volume_slider_rect = pygame.Rect(SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 100, 200, 50)
+            draw_rounded_rect(screen, WHITE, volume_slider_rect, 10)
+            # 这里可以添加音量滑块的代码
+            # 这里可以添加字体大小调整的代码
+        else:
+            draw_gradient_text('The Great Animal Escape', font_title, GREEN, BLUE, SCREEN_WIDTH // 2 - 400, SCREEN_HEIGHT // 4)
+            draw_button("Start", start_button_rect, GREEN, (45, 160, 73))
+            draw_button("Exit", exit_button_rect, RED, (213, 47, 47))
+            draw_settings_button("Settings", settings_button_rect, GREEN, (45, 160, 73))
+
+        pygame.display.update()
+
+if __name__ == '__main__':
+    main()
 
         
         draw_gradient_text('The Great Animal Escape', font_title, GREEN, BLUE, SCREEN_WIDTH // 2 - 400, SCREEN_HEIGHT // 4)
