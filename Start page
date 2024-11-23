@@ -35,6 +35,17 @@ def draw_rounded_rect(surface, color, rect, radius):
     
     pygame.draw.rect(surface, color, rect, border_radius=radius)
 
+background_image = pygame.image.load('background_image.png')  # 确保背景图文件在正确的路径
+
+def draw_rounded_rect(surface, color, rect, radius):
+    pygame.draw.rect(surface, color, rect, border_radius=radius)
+
+def draw_button(text, rect, color, hover_color):
+    mouse_x, mouse_y = pygame.mouse.get_pos()
+    if rect.collidepoint(mouse_x, mouse_y):
+        button_color = hover_color
+    else:
+        button_color = color
 
 def draw_button(text, rect, color, hover_color):
     mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -128,14 +139,7 @@ if __name__ == '__main__':
     main()
 
         
-        draw_gradient_text('The Great Animal Escape', font_title, GREEN, BLUE, SCREEN_WIDTH // 2 - 400, SCREEN_HEIGHT // 4)
-
-        
-        draw_button("Start", start_button_rect, GREEN, (45, 160, 73))
-        draw_button("Exit", exit_button_rect, RED, (213, 47, 47))
-
-        
-        pygame.display.update()
+       
 
 if __name__ == '__main__':
     main()
