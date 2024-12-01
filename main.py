@@ -1,6 +1,7 @@
 import pygame
 import random
 import time
+import os
 
 # 初始化Pygame
 pygame.init()
@@ -9,16 +10,20 @@ pygame.init()
 screen_width, screen_height = 900, 600
 screen = pygame.display.set_mode((screen_width, screen_height))
 
+# 设置图片路径（相对路径）
+base_dir = os.path.dirname(__file__)  # 获取当前文件的目录
+image_dir = os.path.join(base_dir, 'assets', 'images')  # 图片文件夹路径
+
 # 加载背景音乐
-pygame.mixer.music.load('/Users/liuqianwei/Desktop/final-assignment/image/pictures new/background_music.mp3')  # 替换为你的音乐文件路径
+pygame.mixer.music.load(os.path.join(image_dir, 'background_music.mp3'))  # 替换为相对路径
 pygame.mixer.music.play(-1)
 
 # 加载图片
-background_image = pygame.image.load('/Users/liuqianwei/Desktop/final-assignment/image/pictures new/background_image.jpg')  # 游戏背景
-player_image = pygame.image.load('/Users/liuqianwei/Desktop/final-assignment/image/pictures new/player_image.png')  # 玩家图片
-enemy_image = pygame.image.load('/Users/liuqianwei/Desktop/final-assignment/image/pictures new/enemy_image.png')  # 敌人图片
-success_image = pygame.image.load('/Users/liuqianwei/Desktop/final-assignment/image/pictures new/success_image.png')  # 成功结束页面图片
-game_over_image = pygame.image.load('/Users/liuqianwei/Desktop/final-assignment/image/pictures new/game_over_image.JPG')  # 游戏结束页面图片
+background_image = pygame.image.load(os.path.join(image_dir, 'background_image.jpg'))  # 游戏背景
+player_image = pygame.image.load(os.path.join(image_dir, 'player_image.png'))  # 玩家图片
+enemy_image = pygame.image.load(os.path.join(image_dir, 'enemy_image.png'))  # 敌人图片
+success_image = pygame.image.load(os.path.join(image_dir, 'success_image.png'))  # 成功结束页面图片
+game_over_image = pygame.image.load(os.path.join(image_dir, 'game_over_image.JPG'))  # 游戏结束页面图片
 
 # 定义颜色
 black = (0, 0, 0)
@@ -191,7 +196,8 @@ def complex_level():
         if keys[pygame.K_DOWN] and player_pos[1] < screen_height - player_size:
             player_pos[1] += 10
 
-        for i, (enemy_pos, enemy_speed) in enumerate(enemies):
+        for i, (enemy_pos,
+        enemy_speed) in enumerate(enemies):
             enemy_pos[0] += enemy_speed[0]
             enemy_pos[1] += enemy_speed[1]
 
