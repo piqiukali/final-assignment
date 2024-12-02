@@ -1,3 +1,4 @@
 # final-assignment
 casual game
-starts with 'main.py' file
+
+starts with 'image——picture new——main.py' /'main.py'file
